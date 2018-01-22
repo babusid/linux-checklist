@@ -64,8 +64,8 @@ To edit files, run `gedit`, a graphical editor akin to notepad; `nano`, a simple
 		2.Add a minimum password complexity
 			1. Open `/etc/pam.d/common-password`.
 			2. Locate the line that has pam.cracklib.so in it
-				If you cannot find that line, run sudo apt-get install libpam-cracklib to install cracklib, close the file and open it again with sudo.
-			3.Add `ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-`. to the end of the line
+				If you cannot find that line, run sudo apt-get install libpam-cracklib to install cracklib, 				    close the file and open it again with sudo.
+			3.Add `ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-` to the end of the line.
 		3. Implement an account lockout policy.
 			1. Open `/etc/pam.d/common-auth`.
 			2. Add `deny=5 unlock_time=1800` to the end of the line with `pam_tally2.so` in it.
