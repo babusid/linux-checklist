@@ -1,5 +1,4 @@
-# Sean "Forty-Bot" Anderson's 0x539 Linux Checklist v1.0
-
+# Brentwood High School Linux Checklist
 ## Notes
 
 **If a command errors or fails, try it again with `sudo` (or `sudo !!` to save typing)**
@@ -10,7 +9,8 @@ When you see the syntax `$word`, do not type it verbatim, but instead substitute
 
 When the order of steps does not matter, bullet points have been used instead of ordinals.
 
-To edit files, run `gedit`, a graphical editor akin to notepad; `nano`, a simple command-line editor; or `vim`, a powerful  but less intuitive command-line editor. Note that vim may need to be installed with `apt-get install vim`.
+To edit files, run `gedit`, a graphical editor akin to notepad; `nano`, a simple 
+command-line editor; or `vim`, a powerful  but less intuitive command-line editor. Note that vim may need to be installed with `apt-get install vim`.
 
 ## Checklist
 
@@ -20,8 +20,9 @@ To edit files, run `gedit`, a graphical editor akin to notepad; `nano`, a simple
 
 1. **Do Forensics Questions**
 	
-	You may destroy the requisite information if you work on the checklist!
-
+	You may destroy the requisite information if you work on the checklist! Tip: The majority of the time, the forensics questions (at least one of them) will ask you to find a certain type of file, or a certain file on the system. To print the entirety of the filetree, and reveal every file as well as its path, use `sudo ls -aR`. Pipe the output of this to `grep""`and you will be able to find most any type of file, or specific file. (grep is essentially ctrl+F for the terminal)
+	
+	Ex: `sudo ls -aR|grep"example.mp3"`
 1. Secure root
 
 	set `PermitRootLogin no` in `/etc/ssh/sshd_config`
@@ -48,7 +49,7 @@ To edit files, run `gedit`, a graphical editor akin to notepad; `nano`, a simple
 	1. Check `/etc/group` and remove non-admins from sudo and admin groups.
 	1. Check user directories.
 		1. cd `/home`
-		1. `sudo ls -Ra *`
+		1. `sudo ls -aR *`
 		1. Look in any directories which show up for media files/tools and/or "hacking tools."
 	1. Enforce  Password Requirements.
 		1. Add or change password expiration requirements to `/etc/login.defs`.
@@ -60,8 +61,8 @@ To edit files, run `gedit`, a graphical editor akin to notepad; `nano`, a simple
 			```
 		1. Add a minimum password length.
 			1. Open `/etc/pam.d/common-password` with sudo.
-			1. Add `minlen=8` to the end of the line that has `pam_unix.so` in it.
-		2. Add a password history
+			2. Add `minlen=8` to the end of the line that has `pam_unix.so` in it.
+		1. Add a password history
 			1. Open `/etc/pam.d/common-password` with sudo.
 			2.Add `remember=5` to the end of the line that has `pam_unix.so` in it.
 		2.Add a minimum password complexity
@@ -69,12 +70,14 @@ To edit files, run `gedit`, a graphical editor akin to notepad; `nano`, a simple
 			2. Locate the line that has pam.cracklib.so in it.
 				If you cannot find that line, run sudo apt-get install libpam-cracklib to install cracklib, 				    close the file and open it again with sudo.
 			3.Add `ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-` to the end of the line.
-		3. Implement an account lockout policy.
+		1. Implement an account lockout policy.
 			1. Open `/etc/pam.d/common-auth`.
 			2. Add `deny=5 unlock_time=1800` to the end of the line with `pam_tally2.so` in it.
-		4. Change all passwords to satisfy these requirements.
+		1. Change all passwords to satisfy these requirements.
 			
-			`chpasswd` is very useful for this purpose.
+			Use `chpasswd` to change the passwords of accounts from the terminal, alternatively, you can change them individiually through **Settings-->Users**, unlocking the settings and then individually typing in new passwords for accounts where they do not meet complexity requirements
+			
+			***Note: You will have to manually change any account that has a weak password, however, these will only be part of the admin accounts. Check the given admin passwords and determine which ones are weak and change those first.***
 
 1. Enable automatic updates
 	
@@ -95,9 +98,11 @@ To edit files, run `gedit`, a graphical editor akin to notepad; `nano`, a simple
 		1. `sudo ss -l` to make sure the port actually closed.
 
 1. Secure network
-	1. Enable the firewall
-	
-		`sudo ufw enable`
+	1. Enable the firewall  
+	Install gufw (A graphical frontend for the pre-existing ubuntu firewall):  
+	`sudo apt-get install gufw`  
+	 If the system returns that gufw is already installed, run   
+	 `sudo gufw`
 	1. Enable syn cookie protection
 	
 		`sysctl -n net.ipv4.tcp_syncookies`
@@ -133,13 +138,10 @@ To edit files, run `gedit`, a graphical editor akin to notepad; `nano`, a simple
 
 * Netcat is installed by default in ubuntu. You will most likely not get points for removing this version.
 * Some services (such as `ssh`) may be required even if they are not mentioned in the readme. Others may be points even if they are explicitly mentioned in the readme
+* ***The readme is the highest authority on the image scenario. If it tells you to leave something, even if you believe it to be the worlds biggest security flaw, LEAVE IT. And if it tells you to remove something, even if it is incredibly beneficial, REMOVE IT.***
 
-## Acknowledgements
-* Michael "MB" Bailey and Christopher "CJ" Gardner without whose checklists this would never have been possible.
-* Alexander Dittman and Alistair Norton for being fellow linux buddies.
-* My 2015-16 CP team: Quiana Dang, Sieun Lee, Jasper Woolley, and David Randazzo.
-* In no particular order: Marcus Phoon, Joshua Hufnagel, Patrick Hufnagel, Michael-Andrew Keays, Christopher May, Garrett Brothers, Joseph Kelley, and Julian Vallyeason.
-* And the CyberPatriot program.
+## Acknowledgments
+Sean "Forty-Bot" Anderson, whose checklist this was originally forked from and then iterated upon. (His checklist can be found here:https://github.com/Forty-Bot/linux-checklist)
 
 [![Creative Commons License][image-1]][1]  
  This checklist is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License][1].
