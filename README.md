@@ -15,17 +15,30 @@ command-line editor; or `vim`, a powerful  but less intuitive command-line edito
 ## Checklist
 
 1. Read the readme
+	* **The readme is the highest authority on the image scenario. If it tells you to leave something, even if you believe it to be the worlds biggest security flaw, LEAVE IT. And if it tells you to remove something, even if it is incredibly beneficial, REMOVE IT.**
 	
-	Note down which ports/users are allowed.
+	* Note down which ports/users are allowed.
+	
+	* Note down which services are necessary/needed.
+		* Some of the following steps are made under the assumption that those services are needed. **USE YOUR HEAD.** If it's not needed, these steps might **NOT APPLY**.
+
+1. Install locate package, it makes finding things ridiculously easy.
+	1. `sudo apt-get install locate`
+	2. `locate [blank]`
 
 1. **Do Forensics Questions**
 	
 	You may destroy the requisite information if you work on the checklist! Tip: The majority of the time, the forensics questions (at least one of them) will ask you to find a certain type of file, or a certain file on the system. To print the entirety of the filetree, and reveal every file as well as its path, use `sudo ls -aR`. Pipe the output of this to `grep""`and you will be able to find most any type of file, or specific file. (grep is essentially ctrl+F for the terminal)
 	
 	Ex: `sudo ls -aR|grep"example.mp3"`
-1. Secure root
 
-	set `PermitRootLogin no` in `/etc/ssh/sshd_config`
+	Ex: `sudo locate ".mp3"`
+
+1. Secure ssh installation (if ssh is needed as it commonly is; if ssh is specified as not needed in readme **DELETE IT**, but it may be unspecified. **USE YOUR HEAD**)
+
+	1. set `PermitRootLogin no` in `/etc/ssh/sshd_config` to disable root logins
+	1. set `PermitEmptyPasswords no` in `/etc/ssh/sshd_config` to disable empty passwords
+	1. set `PermitUserEnvironment no` in `/etc/ssh/sshd_config` 
 
 1. Secure Users
 	1. Disable the guest user.
@@ -130,6 +143,7 @@ command-line editor; or `vim`, a powerful  but less intuitive command-line edito
 		
 		`service --status-all`
 
+
 1. Check the installed packages for "hacking tools," such as password crackers.
 
 1. Run other (more comprehensive) checklists. This is checklist designed to get most of the common points, but it may not catch everything.
@@ -138,7 +152,7 @@ command-line editor; or `vim`, a powerful  but less intuitive command-line edito
 
 * Netcat is installed by default in ubuntu. You will most likely not get points for removing this version.
 * Some services (such as `ssh`) may be required even if they are not mentioned in the readme. Others may be points even if they are explicitly mentioned in the readme
-* ***The readme is the highest authority on the image scenario. If it tells you to leave something, even if you believe it to be the worlds biggest security flaw, LEAVE IT. And if it tells you to remove something, even if it is incredibly beneficial, REMOVE IT.***
+
 
 ## Acknowledgments
 Sean "Forty-Bot" Anderson, whose checklist this was originally forked from and then iterated upon. (His checklist can be found here:https://github.com/Forty-Bot/linux-checklist)
